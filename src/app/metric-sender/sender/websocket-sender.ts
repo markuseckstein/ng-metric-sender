@@ -1,5 +1,5 @@
 import {Inject, Injectable, InjectionToken, NgZone, OnDestroy} from '@angular/core';
-import io from 'socket.io-client';
+import * as io from 'socket.io-client';
 import {DataPoint} from '../data-point';
 import {Sender} from './sender';
 

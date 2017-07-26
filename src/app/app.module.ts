@@ -10,7 +10,7 @@ import {MetricSenderModule} from './metric-sender/metric-sender.module';
   ],
   imports: [
     BrowserModule,
-    MetricSenderModule.forRootWithUrl(),
+    MetricSenderModule.forRootWithUrl('http://localhost:8124'),
     MetricSenderModule.forChildWithPrefix('testPrefix')
   ],
   providers: [],

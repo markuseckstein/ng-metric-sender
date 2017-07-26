@@ -20,7 +20,7 @@ export class MetricSenderModule {
     }
   }
 
-  public static forChildWithPrefix(prefix: string = null): ModuleWithProviders {
+  public static forChildWithPrefix(prefix: string): ModuleWithProviders {
     return {
       ngModule: MetricSenderModule,
       providers: [

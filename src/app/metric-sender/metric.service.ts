@@ -2,7 +2,7 @@ import {Inject, Injectable, InjectionToken, NgZone, Optional} from '@angular/cor
 import {DataPoint} from './data-point';
 import {METRIC_SENDER_TOKEN, Sender} from './sender/sender';
 
-export const METRIC_SENDER_PREFIX = new InjectionToken('METRIC_SENDER_PREFIX');
+export const METRIC_SENDER_PREFIX = new InjectionToken<string>('METRIC_SENDER_PREFIX');
 
 
 @Injectable()
@@ -19,7 +19,7 @@ export class MetricService {
    * @param  {string} stat
    * @param  {number} sampleRate
    */
-  public increment(stat, sampleRate?): void {
+  public increment(stat: string, sampleRate?: string): void {
     this.send({action: 'i', name: stat, sr: sampleRate});
   };
 
@@ -29,7 +29,7 @@ export class MetricService {
    * @param  {string} stat
    * @param  {number} sampleRate
    */
-  public decrement(stat, sampleRate?): void {
+  public decrement(stat: string, sampleRate?: string): void {
     this.send({action: 'd', name: stat, sr: sampleRate});
   };
 
@@ -40,7 +40,7 @@ export class MetricService {
    * @param  {number} value
    * @param  {number} sampleRate
    */
-  public gauge(stat, value, sampleRate?): void {
+  public gauge(stat: string, value: number, sampleRate?: string): void {
     this.send({action: 'g', name: stat, value: value, sr: sampleRate});
   };
 
@@ -56,7 +56,7 @@ export class MetricService {
    * @param  {number|Date|function} time
    * @param  {number}               sampleRate
    */
-  public timing(stat, time, sampleRate?): void {
+  public timing(stat: string, time: number | Date | Function, sampleRate?: string): void {
     if ('number' === typeof time) {
       this.send({action: 't', name: stat, value: time, sr: sampleRate});
       return;
@@ -82,9 +82,9 @@ export class MetricService {
    * @param  {number}   sampleRate
    * @return {function}
    */
-  public timer(stat, sampleRate?): Function {
-    const start = new Date().getTime();
-    return function () {
+  public timer(stat: string, sampleRate?: string): () => void {
+    const start = new Date();
+    return () => {
       this.send({action: 't', name: stat, value: this.fromNow(start), sr: sampleRate});
     }
   };
@@ -95,8 +95,8 @@ export class MetricService {
    * @param  {object} time
    * @return {number} difference in milliseconds
    */
-  private fromNow(date): number {
-    return (new Date().getTime()) - date;
+  private fromNow(date: Date): number {
+    return (new Date().getTime()) - date.getTime();
   }
 
   private send(data: DataPoint): void {
